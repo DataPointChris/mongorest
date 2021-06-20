@@ -1,14 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Records, Sir</title>
 </head>
+
 <body>
+    <h1>Here's your shit</h1>
+
+    <h2>Add new task:</h2>
+    <p>
+    <form class='form' method="POST">
+        <label for='project'>Project:</label>
+        <input type='text' id='project' , name='project'><br>
+        <label for='task'>Task:</label>
+        <input type='text' id='task' , name='task'><br>
+        <label for='description'>Description:</label>
+        <input type='text' id='description' , name='description'><br>
+        <input type='submit' value='Add Task'>
+
+
+    </form>
+    </p>
     {% for record in records %}
     <li>{{ record }}</li>
     {% endfor %}
 </body>
+
 </html>
