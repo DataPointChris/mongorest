@@ -1,5 +1,5 @@
 import sqlite3
-import junkinserts
+from . import junkinserts
 
 class DBManager:
     def __init__(self, db_name):

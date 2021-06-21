@@ -5,8 +5,8 @@ import pymongo
 from flask import Flask, jsonify, redirect, render_template, request
 from bson.json_util import dumps
 
-import mongodb
-import sqlitedb
+from . import mongodb
+from . import sqlitedb
 
 dotenv.load_dotenv()
 
@@ -52,4 +52,4 @@ def get_projects_json():
 if __name__ == '__main__':
     # db.create_table()
     # db.insert_test()
-    app.run(host='127.0.0.1', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=True)

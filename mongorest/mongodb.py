@@ -1,4 +1,4 @@
-import junkinserts
+from . import junkinserts
 
 class DBManager:
     def __init__(self, client, database, collection):
