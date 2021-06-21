@@ -1,6 +1,5 @@
 import junkinserts
 
-
 class DBManager:
     def __init__(self, client, database, collection):
         self.client = client
@@ -14,7 +13,7 @@ class DBManager:
         self.coll.insert_many(junkinserts.mongo_insertions)
 
     def get_all(self):
-        return self.coll.find({})
+        return list(self.coll.find({}))
 
     def get_by_id(self, id):
         return self.coll.find({'id': id})
@@ -35,4 +34,4 @@ class DBManager:
         self.coll.delete_one({'_id': id})
 
     def get_projects(self):
-        self.coll.distinct('project')
+        return self.coll.distinct('project')
