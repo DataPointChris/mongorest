@@ -13,6 +13,7 @@ pathspec==0.8.1
 pycodestyle==2.7.0
 pyflakes==2.3.1
 pymongo==3.11.4
+python-dotenv==0.18.0
 regex==2021.4.4
 toml==0.10.2
 Werkzeug==2.0.1
