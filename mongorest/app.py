@@ -10,7 +10,7 @@ from . import sqlitedb
 
 dotenv.load_dotenv()
 
-client = pymongo.MongoClient('mongodb://127.0.0.1:27017')
+# client = pymongo.MongoClient('mongodb://127.0.0.1:27017')
 client = pymongo.MongoClient(os.environ.get('MONGODB_AWS'))
 # client = pymongo.MongoClient(os.environ.get('MONGODB_URI'))
 db = mongodb.DBManager(client=client, database='todo', collection='projects')
@@ -52,4 +52,4 @@ def get_projects_json():
 if __name__ == '__main__':
     # db.create_table()
     # db.insert_test()
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(debug=True)
