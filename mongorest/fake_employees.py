@@ -8,7 +8,16 @@ fake = Faker()
 def create_fake_employees(num_employees):
 
     departments = {1: 'engineering', 2: 'hr', 3: 'accounting', 4: 'development'}
-    roles = {1: 'junior', 2: 'dev', 3: 'senior', 4: 'lead', 5: 'technician', 6: 'custodian', 7: 'CTO', 8: 'CEO'}
+    roles = {
+        1: 'junior',
+        2: 'dev',
+        3: 'senior',
+        4: 'lead',
+        5: 'technician',
+        6: 'custodian',
+        7: 'CTO',
+        8: 'CEO',
+    }
     status = ['current', 'sabbatical', 'terminated', 'furlough']
     fake_list = []
 

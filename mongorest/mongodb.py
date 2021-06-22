@@ -43,3 +43,6 @@ class DBManager:
 
     def delete(self, id):
         self.coll.delete_one({'_id': id})
+
+    def delete_all(self):
+        self.coll.delete_many({})

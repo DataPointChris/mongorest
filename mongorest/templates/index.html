@@ -13,31 +13,34 @@
     <h2>Swagger, Inc. Bullshit Corp</h2>
 
     <h3>Here's Your God Dang Swagger API</h3>
- 
-    
- 
- 
- 
- 
- 
- 
-    <!-- <p>
-    <form class='form' method="POST">
-        <label for='project'>Project:</label>
-        <input type='text' id='project' , name='project'><br>
-        <label for='task'>Task:</label>
-        <input type='text' id='task' , name='task'><br>
-        <label for='description'>Description:</label>
-        <input type='text' id='description' , name='description'><br>
-        <input type='submit' value='Add Task'>
+    <div>
+        <form method="POST">
+            <label for='numemps'>Add Fake Employees: </label>
+            <input type="number" id='numemps' name='numemps' value='50'>
+            <input type="hidden" name="insertfake" value="True">
+            <input type="submit" id='insert' name="insert" value="Insert Fake Employees" /> 
+            (New insert deletes all current employees.)
+            <br><br>
+        </form>
+        <form method="POST">
+
+            <input type="hidden" name="deleteall" value="True">
+            <input type="submit" id='delete' name="delete" value="Delete All Employees" />
+
+        </form>
 
 
-    </form>
-    </p>
-    <h2>Projects and Tasks:</h2><br><br>
-    {% for record in records %}
-    <li>{{ record }}</li><br>
-    {% endfor %} -->
+
+
+
+    </div>
+    <div class='home'>
+        <h3>Current Employees:</h3><br>
+
+        {% for employee in employees %}
+        <li>{{ employee }}</li><br>
+        {% endfor %}
+    </div>
 </body>
 
 </html>

@@ -1,3 +1,4 @@
+from locale import Error
 import os
 
 import dotenv
@@ -21,12 +22,26 @@ db = mongodb.DBManager(client=CLIENT, database=DATABASE, collection=COLLECTION)
 
 app = Flask(__name__)
 
-# db.insert_test_values(50)
-
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    employees = []
+    if request.method == 'POST':
+        insert = request.form.get('insertfake')
+        try:
+            numemps = int(request.form.get('numemps'))
+        except TypeError:
+            numemps = 1
+        delete = request.form.get('deleteall')
+        print(insert, numemps, delete)
+        if insert:
+            db.delete_all()
+            db.insert_test_values(numemps)
+        if delete:
+            db.delete_all()
+        emps = db.get_employee_list()
+        employees = [(f'{d["firstname"]} {d["lastname"]}') for d in emps]
+    return render_template('index.html', employees=employees)
 
 
 @app.route('/employee/')
@@ -65,14 +80,3 @@ def department_by_name(name):
     '''Find employees with this department'''
     departments = db.get_department_employees(name)
     return dumps({name: departments})
-
-
-# def todo_list():
-#     if request.method == 'POST':
-#         project = request.form.get('project')
-#         task = request.form.get('task')
-#         description = request.form.get('description')
-#         db.insert(project, task, description)
-
-#     records = db.get_employee_list()
-#     return render_template('index.html', records=records)
