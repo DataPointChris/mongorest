@@ -12,13 +12,47 @@
 <body>
     <h2>Swagger, Inc. Bullshit Corp</h2>
 
-    <h3>Here's Your God Dang Swagger API</h3>
+    <h3>API Endpoints</h3>
+    <table align="center">
+        <tr>
+            <td>GET</td>
+            <td>/employee</td>
+            <td>All employees</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/employee/{id}</td>
+            <td>Single employee</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/role</td>
+            <td>Get list of company roles</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/role/{name}</td>
+            <td>Get employees with role {name}</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/department</td>
+            <td>Get list of departments</td>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>/department/{name}</td>
+            <td>Get employees in department{name}</td>
+        </tr>
+    </table>
+
+    <br><br><br>
     <div>
         <form method="POST">
             <label for='numemps'>Add Fake Employees: </label>
             <input type="number" id='numemps' name='numemps' value='50'>
             <input type="hidden" name="insertfake" value="True">
-            <input type="submit" id='insert' name="insert" value="Insert Fake Employees" /> 
+            <input type="submit" id='insert' name="insert" value="Insert Fake Employees" />
             (New insert deletes all current employees.)
             <br><br>
         </form>
