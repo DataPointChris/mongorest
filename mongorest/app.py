@@ -23,7 +23,6 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    employees = []
     if request.method == 'POST':
         insert = request.form.get('insertfake')
         try:
@@ -37,8 +36,8 @@ def index():
             db.insert_test_values(numemps)
         if delete:
             db.delete_all()
-        emps = db.get_employee_list()
-        employees = [(f'{d["firstname"]} {d["lastname"]}') for d in emps]
+    emps = db.get_employee_list()
+    employees = [(f'{d["firstname"]} {d["lastname"]}') for d in emps]
     return render_template('index.html', employees=employees)
 
 
