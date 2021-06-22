@@ -12,13 +12,11 @@ from . import sqlitedb
 dotenv.load_dotenv()
 
 
-CLIENT = pymongo.MongoClient('mongodb://127.0.0.1:27017')
+CLIENT = pymongo.MongoClient(os.environ.get('MONGODB_LOCAL'))
 # CLIENT = pymongo.MongoClient(os.environ.get('MONGODB_AWS'))
-# CLIENT = pymongo.MongoClient(os.environ.get('MONGODB_ATLAS'))
 DATABASE = os.environ.get('DATABASE')
 COLLECTION = os.environ.get('COLLECTION')
 db = mongodb.DBManager(client=CLIENT, database=DATABASE, collection=COLLECTION)
-# db = sqlitedb.DBManager(db_name='todo.db')
 
 app = Flask(__name__)
 
