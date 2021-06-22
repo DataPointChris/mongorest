@@ -1,4 +1,4 @@
-
+![Flask Server](flaskserve.png)
 <h1 align="center">
   mongorest
   <br>

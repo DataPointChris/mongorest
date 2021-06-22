@@ -10,10 +10,14 @@ from . import sqlitedb
 
 dotenv.load_dotenv()
 
-# client = pymongo.MongoClient('mongodb://127.0.0.1:27017')
-client = pymongo.MongoClient(os.environ.get('MONGODB_AWS'))
-# client = pymongo.MongoClient(os.environ.get('MONGODB_URI'))
-db = mongodb.DBManager(client=client, database='todo', collection='projects')
+
+
+CLIENT = pymongo.MongoClient('mongodb://127.0.0.1:27017')
+# CLIENT = pymongo.MongoClient(os.environ.get('MONGODB_AWS'))
+# CLIENT = pymongo.MongoClient(os.environ.get('MONGODB_ATLAS'))
+DATABASE = os.environ.get('DATABASE')
+COLLECTION = os.environ.get('COLLECTION')
+db = mongodb.DBManager(client=CLIENT, database=DATABASE, collection=COLLECTION)
 # db = sqlitedb.DBManager(db_name='todo.db')
 
 app = Flask(__name__)
@@ -50,6 +54,5 @@ def get_projects_json():
 
 
 if __name__ == '__main__':
-    # db.create_table()
-    # db.insert_test()
-    app.run(debug=True)
+    # db.insert_test_values()
+

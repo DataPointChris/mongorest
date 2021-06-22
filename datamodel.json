@@ -1,0 +1,19 @@
+{
+    "id": 1,
+    "firstname": "firstname",
+    "lastname": "lastname",
+    "roleid": 5,
+    "role": "lead",
+    "previous_roles": ["junior", "dev", "senior"],
+    "department": "engineering",
+    "salary": 125000,
+    "phone": [
+        {
+            "work": 1234567890,
+            "cell": 4561237890
+        }
+    ],
+    "hiredate": "2021-01-01",
+    "age": "age",
+    "status": "current"
+}

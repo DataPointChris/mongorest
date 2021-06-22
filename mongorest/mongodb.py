@@ -1,4 +1,5 @@
 from . import junkinserts
+from .fake_employees import create_fake_employees
 
 class DBManager:
     def __init__(self, client, database, collection):
@@ -6,11 +7,8 @@ class DBManager:
         self.db = self.client[database]
         self.coll = self.db[collection]
 
-    def create_table(self):
-        pass
-
-    def insert_test(self):
-        self.coll.insert_many(junkinserts.mongo_insertions)
+    def insert_test_values(self):
+        self.coll.insert_many(create_fake_employees(5))
 
     def get_all(self):
         return list(self.coll.find({}))
