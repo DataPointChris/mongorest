@@ -1,19 +1,21 @@
 {
-    "id": 1,
-    "firstname": "firstname",
-    "lastname": "lastname",
-    "roleid": 5,
-    "role": "lead",
-    "previous_roles": ["junior", "dev", "senior"],
-    "department": "engineering",
-    "salary": 125000,
-    "phone": [
-        {
-            "work": 1234567890,
-            "cell": 4561237890
-        }
-    ],
-    "hiredate": "2021-01-01",
-    "age": "age",
-    "status": "current"
+    "id": i,
+    "firstname": fake.first_name(),
+    "lastname": fake.last_name(),
+    "personal_info": {
+        "address": fake.street_address(),
+        "city": fake.city(),
+        "state": fake.state(),
+        "country": fake.country(),
+        "phone": {"work": fake.phone_number(), "cell": fake.phone_number()},
+    },
+    "role_id": role_id,
+    "role": role,
+    "previous_roles": previous_roles,
+    "department_id": dept_no,
+    "department": department,
+    "salary": salary,
+    "hiredate": hire_date,
+    "age": age,
+    "status": status,
 }
