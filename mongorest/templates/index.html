@@ -7,74 +7,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Swagger, Inc. Bullshit Corp</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/swagger-ui.css') }}">
 </head>
 
 <body>
-    <h2>Swagger, Inc. Bullshit Corp</h2>
-
-    <h3>API Endpoints</h3>
-    <table align="center">
+    <table class="navtable" align="center">
         <tr>
-            <td>GET</td>
-            <td>/employee</td>
-            <td>All employees</td>
+            <td colspan="2">
+                <h4>Swagger, Inc. Bullshit Corp</h4>
+            </td>
         </tr>
         <tr>
-            <td>GET</td>
-            <td>/employee/{id}</td>
-            <td>Single employee</td>
+            <td><a href="/">Home</a></td>
+            <td><a href="/api">API</a></td>
         </tr>
-        <tr>
-            <td>GET</td>
-            <td>/role</td>
-            <td>Get list of company roles</td>
-        </tr>
-        <tr>
-            <td>GET</td>
-            <td>/role/{name}</td>
-            <td>Get employees with role {name}</td>
-        </tr>
-        <tr>
-            <td>GET</td>
-            <td>/department</td>
-            <td>Get list of departments</td>
-        </tr>
-        <tr>
-            <td>GET</td>
-            <td>/department/{name}</td>
-            <td>Get employees in department{name}</td>
-        </tr>
-    </table>
+        </table>
 
-    <br><br><br>
-    <div>
-        <form method="POST">
-            <label for='numemps'>Add Fake Employees: </label>
-            <input type="number" id='numemps' name='numemps' value='50'>
-            <input type="hidden" name="insertfake" value="True">
-            <input type="submit" id='insert' name="insert" value="Insert Fake Employees" />
-            (New insert deletes all current employees.)
-            <br><br>
-        </form>
-        <form method="POST">
 
-            <input type="hidden" name="deleteall" value="True">
-            <input type="submit" id='delete' name="delete" value="Delete All Employees" />
+       <br><br>
+        <div>
+            <form method="POST">
+                <label for='numemps'>Add Fake Employees: </label>
+                <input type="number" id='numemps' name='numemps' value='50'>
+                <input type="hidden" name="insertfake" value="True">
+                <input type="submit" id='insert' name="insert" value="Insert Fake Employees" />
+                (New insert deletes all current employees.)
+                <br><br>
+            </form>
+            <form method="POST">
 
-        </form>
+                <input type="hidden" name="deleteall" value="True">
+                <input type="submit" id='delete' name="delete" value="Delete All Employees" />
+
+            </form>
 
 
 
 
 
-    </div>
-    <div class='home'>
-        <h3>Current Employees:</h3><br>
+        </div>
+        <div class='home'>
+            <h3>Current Employees:</h3><br>
 
-        {% for employee in employees %}
-        <li>{{ employee }}</li><br>
-        {% endfor %}
-    </div>
+            {% for employee in employees %}
+            <li>{{ employee }}</li><br>
+            {% endfor %}
+        </div>
 </body>
 
 </html>

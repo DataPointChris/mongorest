@@ -40,6 +40,9 @@ def index():
     employees = [(f'{d["firstname"]} {d["lastname"]}') for d in emps]
     return render_template('index.html', employees=employees)
 
+@app.route('/api/')
+def api():
+    return render_template('api.html')
 
 @app.route('/employee/')
 def get_employees():
