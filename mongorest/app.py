@@ -66,12 +66,14 @@ def employees():
 
 
 @app.route('/api/employees/<int:id>/', methods=['GET', 'PUT', 'DELETE'])
-def employee_by_id(id):
+def employee_by_id(id, **updated_kwargs):
+    # id = request.form.get('id')
+    # updated_kwargs = request.form.get('updated_kwargs')
     if request.method == 'PUT':
-        pass
+        db.put_update_employee_by_id(id, **updated_kwargs)
 
     elif request.method == 'DELETE':
-        pass
+        db.delete_employee_by_id(id)
 
     employee = db.get_employee_by_id(id)
     # TODO: Should this be a `make_response()`
@@ -90,19 +92,22 @@ def roles():
 
 @app.route('/roles/<string:name>/', methods=['PUT'])
 def edit_role(name):
-    db.put_edit_role_by_name()
+    # name = request.form.get('name')
+    db.put_edit_role_by_name(name)
 
 
-@app.route('/roles/<string:name>/employees/', methods=['GET'])
+@app.route('/api/roles/<string:name>/employees/', methods=['GET'])
 def employees_by_role(name):
     '''Find employees with this role'''
+    # name = request.form.get('name')
     roles = db.get_employees_by_role(name)
     return dumps({name: roles})
 
 
-@app.route('/roles/<string:name>/departments', methods=['GET'])
-def departments_by_role(name):
+@app.route('/api/roles/<string:name>/departments/', methods=['GET'])
+def departments_by_role():
     '''Find departments with this role'''
+    name = request.form.get('name')
     roles = db.get_departments_with_role(name)
     return dumps({name: roles})
 
@@ -117,19 +122,23 @@ def departments():
 
 
 @app.route('/api/departments/<string:name>/', methods=['PUT'])
-def edit_department(name):
-    db.put_edit_department_by_name()
+def edit_department():
+    name = request.form.get('name')
+    updated_kwargs = request.form.get('updated_kwargs')
+    db.put_edit_department_by_name(name, **updated_kwargs)
 
 
 @app.route('/api/departments/<string:name>/employees/', methods=['GET'])
-def employees_by_department(name):
+def employees_by_department():
     '''Find employees with this department'''
+    name = request.form.get('name')
     departments = db.get_employees_in_department(name)
     return dumps({name: departments})
 
 
 @app.route('/api/departments/<string:name>/roles/', methods=['GET'])
-def roles_by_department(name):
+def roles_by_department():
     '''Find roles in this department'''
+    name = request.form.get('name')
     departments = db.get_roles_by_department(name)
     return dumps({name: departments})
