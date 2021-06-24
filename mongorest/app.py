@@ -7,7 +7,6 @@ from flask import Flask, jsonify, redirect, render_template, request
 from bson.json_util import dumps
 
 from . import mongodb
-from . import sqlitedb
 
 dotenv.load_dotenv()
 

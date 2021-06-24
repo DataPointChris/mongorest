@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swagger, Inc. Bullshit Corp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/swagger-ui.css') }}">
+</head>
+<!-- Include this on the main file, this is what everything is extending -->
+{% include 'navigation.html' %}
+
+<!-- Each different page that is rendered has this block for the main content -->
+    {% block content %}{% endblock content %}
+
+</body>
+
+</html>

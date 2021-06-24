@@ -1,58 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swagger, Inc. Bullshit Corp</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/swagger-ui.css') }}">
-</head>
+{% block content %}
+    <div class='fakeform'>
+        <form method="POST">
+            <label for='numemps'>Add Fake Employees: </label>
+            <input type="number" id='numemps' name='numemps' value='50'>
+            <input type="hidden" name="insertfake" value="True">
+            <input type="submit" id='insert' name="insert" value="Insert Fake Employees" />
+            (New insert deletes all current employees.)
+            <br><br>
+        </form>
+        <form method="POST">
 
-<body>
-    <table class="navtable" align="center">
-        <tr>
-            <td colspan="2">
-                <h4>Swagger, Inc. Bullshit Corp</h4>
-            </td>
-        </tr>
-        <tr>
-            <td><a href="/">Home</a></td>
-            <td><a href="/api">API</a></td>
-        </tr>
-        </table>
+            <input type="hidden" name="deleteall" value="True">
+            <input type="submit" id='delete' name="delete" value="Delete All Employees" />
 
-
-       <br><br>
-        <div>
-            <form method="POST">
-                <label for='numemps'>Add Fake Employees: </label>
-                <input type="number" id='numemps' name='numemps' value='50'>
-                <input type="hidden" name="insertfake" value="True">
-                <input type="submit" id='insert' name="insert" value="Insert Fake Employees" />
-                (New insert deletes all current employees.)
-                <br><br>
-            </form>
-            <form method="POST">
-
-                <input type="hidden" name="deleteall" value="True">
-                <input type="submit" id='delete' name="delete" value="Delete All Employees" />
-
-            </form>
+        </form>
 
 
 
 
 
-        </div>
-        <div class='home'>
-            <h3>Current Employees:</h3><br>
+    </div>
+    <div class='about'>
+        <h3>Current Employees:</h3><br>
 
-            {% for employee in employees %}
-            <li>{{ employee }}</li><br>
-            {% endfor %}
-        </div>
-</body>
-
-</html>
+        {% for employee in employees %}
+        - {{ employee }}<br>
+        {% endfor %}
+    </div>
+    {% endblock %}

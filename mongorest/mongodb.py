@@ -1,4 +1,3 @@
-from . import junkinserts
 from .fake_employees import create_fake_employees
 
 

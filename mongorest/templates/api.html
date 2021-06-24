@@ -1,28 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swagger, Inc. Bullshit Corp</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/swagger-ui.css') }}">
-</head>
-
-<body>
-    <table class="navtable" align="center">
-        <tr>
-            <td colspan="2">
-                <h4>Swagger, Inc. Bullshit Corp</h4>
-            </td>
-        </tr>
-        <tr>
-            <td><a href="/">Home</a></td>
-            <td><a href="/api">API</a></td>
-        </tr>
-        </table>
-
+{% extends 'base.html' %}
+{% block content %}
 
         <div id="swagger-ui"></div>
 
@@ -49,9 +26,4 @@
                 window.ui = ui;
             };
         </script>
-
-
-       
-</body>
-
-</html>
+{% endblock content %}

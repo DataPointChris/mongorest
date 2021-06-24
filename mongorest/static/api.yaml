@@ -1,16 +1,16 @@
 openapi: 3.0.1
 info:
-  title: Swagger, Inc. Bullshit Corp
-  description: OpenAPI is pretty cool, but the swagger editor is kinda bullshit.  🤷‍♂️ 🤷‍♂️  🤷‍♂️
+  title: BambooHR API Docs
+  description: Your API, Your Way. ❤️
   contact:
-    name: Chris
+    name: Designed by Chris
     url: https://www.github.com/datapointchris/
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 externalDocs:
-  description: ✅ - Connect with Chris ✅
+  description: Connect with Chris
   url: https://www.linkedin.com/in/chris-birch/
 servers:
   - url: http://ec2-54-144-151-41.compute-1.amazonaws.com
