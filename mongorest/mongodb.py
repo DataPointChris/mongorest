@@ -7,48 +7,72 @@ class DBManager:
         self.db = self.client[database]
         self.coll = self.db[collection]
 
-    def insert_test_values(self, qty): # DONE
-        self.coll.insert_many(create_fake_employees(qty))
+    # ----- EMPLOYEES ----- #
 
-    def get_employee_list(self): # DONE
+    def get_employee_directory(self):  # DONE
         return self.coll.find({})
 
-    def get_employee_id(self, id): # DONE
+    def get_employee_by_id(self, id):  # DONE
         return self.coll.find({'id': id})
 
-    def get_role_list(self): # DONE
-        return self.coll.distinct('role')
+    def post_new_employee(self, employee):
+        self.coll.insert_one(employee)
 
-    def get_role_employees(self, name):
-        return self.coll.find({'role': name})
-
-    def get_department_list(self): # DONE
-        return self.coll.distinct('department')
-
-    def get_roles_by_department(self, name): # DONE
-        roledict = self.coll.find({'department': name}, {'_id': 0, 'role': 1})
-        roles = [d.get('role')  for d in roledict]
-        return roles
-
-    def get_department_employees(self, name): # DONE
-        peepdict = self.coll.find({'department': name}, {'_id': 0, 'firstname': 1, 'lastname': 1})
-        people = [(f'{d.get("firstname")} {d.get("lastname")}') for d in peepdict]
-        return people
-
-    def insert(self, project, task, description):
-        self.coll.insert_one(
-            {'project': project, 'task': task, 'description': description}
-        )
-
-    def update(self, id, project, task, description):
-        query = {'_id': id}
-        update_data = {
-            '$set': {'project': project, 'task': task, 'description': description}
-        }
+    def put_update_employee_by_id(self, id, **updated_kwargs):
+        query = {'id': id}
+        update_data = {'$set': {**updated_kwargs}}
         self.coll.update_one(query, update_data)
 
-    def delete(self, id):
+    def delete_employee_by_id(self, id):
         self.coll.delete_one({'_id': id})
 
+    # ----- ROLES ----- #
+
+    def get_role_list(self):  # DONE
+        return self.coll.distinct('role')
+
+    def put_edit_role_by_name(self, role, **updated_kwargs):
+        query = {'role': role}
+        update_data = {'$set': {**updated_kwargs}}
+        self.coll.update_one(query, update_data)
+
+    def get_employees_by_role(self, role):  # DONE
+        return self.coll.find({'role': role})
+
+    def get_departments_with_role(self, role):
+        deptdict = self.coll.find({'role': role}, {'_id': 0, 'department': 1})
+        depts = [d.get('department') for d in deptdict]
+        return depts
+
+    # ----- DEPARTMENTS ----- #
+
+    def get_department_list(self):  # DONE
+        return self.coll.distinct('department')
+
+    def put_edit_department_by_name(self, name, **updated_kwargs):
+        query = {'name': name}
+        update_data = {'$set': {**updated_kwargs}}
+        self.coll.update_one(query, update_data)
+
+    def get_employees_in_department(self, dept):
+        return self.coll.find({'department': dept})
+
+    def get_roles_by_department(self, dept):  # DONE
+        roledict = self.coll.find({'department': dept}, {'_id': 0, 'role': 1})
+        roles = [d.get('role') for d in roledict]
+        return roles
+
+    # ----- MISC ----- #
+
+    def insert_test_values(self, qty):  # DONE
+        '''Only for testing of database'''
+        self.coll.insert_many(create_fake_employees(qty))
+
+    def generic_update(self, field, id, **updated_kwargs):
+        query = {field: id}
+        update_data = {'$set': {**updated_kwargs}}
+        self.coll.update_one(query, update_data)
+
     def delete_all(self):
+        '''ONLY for testing of database!!'''
         self.coll.delete_many({})
