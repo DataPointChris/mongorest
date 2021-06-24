@@ -7,26 +7,33 @@ class DBManager:
         self.db = self.client[database]
         self.coll = self.db[collection]
 
-    def insert_test_values(self, qty):
+    def insert_test_values(self, qty): # DONE
         self.coll.insert_many(create_fake_employees(qty))
 
-    def get_employee_list(self):
+    def get_employee_list(self): # DONE
         return self.coll.find({})
 
-    def get_employee_id(self, id):
+    def get_employee_id(self, id): # DONE
         return self.coll.find({'id': id})
 
-    def get_role_list(self):
+    def get_role_list(self): # DONE
         return self.coll.distinct('role')
 
     def get_role_employees(self, name):
         return self.coll.find({'role': name})
 
-    def get_department_list(self):
+    def get_department_list(self): # DONE
         return self.coll.distinct('department')
 
-    def get_department_employees(self, name):
-        return self.coll.find({'department': name})
+    def get_roles_by_department(self, name): # DONE
+        roledict = self.coll.find({'department': name}, {'_id': 0, 'role': 1})
+        roles = [d.get('role')  for d in roledict]
+        return roles
+
+    def get_department_employees(self, name): # DONE
+        peepdict = self.coll.find({'department': name}, {'_id': 0, 'firstname': 1, 'lastname': 1})
+        people = [(f'{d.get("firstname")} {d.get("lastname")}') for d in peepdict]
+        return people
 
     def insert(self, project, task, description):
         self.coll.insert_one(

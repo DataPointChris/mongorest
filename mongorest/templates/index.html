@@ -1,27 +1,26 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class='fakeform'>
-    <form method="POST">
-        <h3>Add Fake Employees to DB: </h3>
-        <input class='bigbutton' type="number" id='numemps' name='numemps' value='50'><br>
-        <input class='bigbutton' type="hidden" name="insertfake" value="True">
-        <input class='bigbutton' type="submit" id='insert' name="insert" value="Insert New Fake Employees" /><br>
-    </form>
-    <form method="POST">
-        <input type="hidden" name="deleteall" value="True">
-        <input class='bigbutton' type="submit" id='delete' name="delete" value="Delete All Employees" />
-    </form>
-<!-- </div> -->
-<!-- <div class='employeelist'> -->
-    <h3>Current Employees:</h3>
-    <hr width="60%"><br>
+<div class="indexcontent">
+    <div class='fakeform'>
+        <form method="POST">
+            <h3>Add Fake Employees to DB: </h3>
+            <input class='bigbutton' type="number" id='numemps' name='numemps' value='50'><br>
+            <input class='bigbutton' type="hidden" name="insertfake" value="True">
+            <input class='bigbutton' type="submit" id='insert' name="insert" value="Insert New Fake Employees" /><br>
+        </form>
+        <form method="POST">
+            <input type="hidden" name="deleteall" value="True">
+            <input class='bigbutton' type="submit" id='delete' name="delete" value="Delete All Employees" />
+        </form>
+        <!-- </div> -->
+        <!-- <div class='employeelist'> -->
+        <h3>Current Employees:</h3>
+        <hr width="60%"><br>
 
-    {% for employee in employees %}
-    - {{ employee }}<br>
-    {% endfor %}
-</div>
-<div id='panda'>
-    <img src="../static/image/cutepanda.png" width="100%">
+        {% for employee in employees %}
+        - {{ employee }}<br>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
