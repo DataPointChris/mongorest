@@ -9,12 +9,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/swagger-ui.css') }}">
 </head>
+<body>
 <!-- Include this on the main file, this is what everything is extending -->
 {% include 'navigation.html' %}
 
 <!-- Each different page that is rendered has this block for the main content -->
-    {% block content %}{% endblock content %}
+{% block content %}{% endblock content %}
 
+<!-- {% include 'footer.html' %} -->
 </body>
 
 </html>

@@ -1,32 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class='fakeform'>
-        <form method="POST">
-            <label for='numemps'>Add Fake Employees: </label>
-            <input type="number" id='numemps' name='numemps' value='50'>
-            <input type="hidden" name="insertfake" value="True">
-            <input type="submit" id='insert' name="insert" value="Insert Fake Employees" />
-            (New insert deletes all current employees.)
-            <br><br>
-        </form>
-        <form method="POST">
+<div class='fakeform'>
+    <form method="POST">
+        <label for='numemps'>Add Fake Employees to Test Database: </label><br><br>
+        <input class='bigbutton' type="number" id='numemps' name='numemps' value='50'>
+        <input class='bigbutton' type="hidden" name="insertfake" value="True">
+        <input class='bigbutton' type="submit" id='insert' name="insert" value="Insert New Fake Employees" />
 
-            <input type="hidden" name="deleteall" value="True">
-            <input type="submit" id='delete' name="delete" value="Delete All Employees" />
+        <br><br>
+    </form>
+    <form method="POST">
 
-        </form>
+        <input type="hidden" name="deleteall" value="True">
+        <input class='bigbutton' type="submit" id='delete' name="delete" value="Delete All Employees" />
 
-
+    </form>
 
 
 
-    </div>
-    <div class='about'>
+
+
+</div>
+<div id='panda'>
+    <img src="../static/image/cutepanda.png" width="100%">
+    <div class='employeelist'>
         <h3>Current Employees:</h3><br>
 
         {% for employee in employees %}
         - {{ employee }}<br>
         {% endfor %}
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
