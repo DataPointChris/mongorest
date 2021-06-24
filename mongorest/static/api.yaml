@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: BambooHR API Docs
-  description: Your API, Your Way. ❤️
+  title: 🐼 BambooHR API Docs 🐼
+  description: ''
   contact:
     name: Designed by Chris
     url: https://www.github.com/datapointchris/
@@ -15,17 +15,17 @@ externalDocs:
 servers:
   - url: http://ec2-54-144-151-41.compute-1.amazonaws.com
 tags:
-  - name: employee
+  - name: employees
     description: Employee directory
   - name: role
     description: Role directory
   - name: department
     description: Department directory
 paths:
-  /employee:
+  /api/employees/:
     get:
       tags:
-        - employee
+        - employees
       summary: View employee directory
       description: View every employee in the entire organization
       operationId: ViewEmployees
@@ -43,7 +43,7 @@ paths:
           content: {}
     post:
       tags:
-        - employee
+        - employees
       summary: Add a new employee to the store
       operationId: addEmployee
       requestBody:
@@ -62,10 +62,10 @@ paths:
             - write:employee
             - read:employee
       x-codegen-request-body-name: body
-  /employee/{id}:
+  /api/employees/{id}/:
     get:
       tags:
-        - employee
+        - employees
       summary: Find employee by ID
       description: Returns a single employee
       operationId: getEmployeeById
@@ -92,41 +92,37 @@ paths:
           content: {}
       security:
         - api_key: []
-    # post:
-    #   tags:
-    #     - employee
-    #   summary: Updates a pet in the store with form data
-    #   operationId: updatePetWithForm
-    #   parameters:
-    #     - name: petId
-    #       in: path
-    #       description: ID of pet that needs to be updated
-    #       required: true
-    #       schema:
-    #         type: integer
-    #         format: int64
-    #   requestBody:
-    #     content:
-    #       application/x-www-form-urlencoded:
-    #         schema:
-    #           properties:
-    #             name:
-    #               type: string
-    #               description: Updated name of the pet
-    #             status:
-    #               type: string
-    #               description: Updated status of the pet
-    #   responses:
-    #     405:
-    #       description: Invalid input
-    #       content: {}
-    #   security:
-    #     - petstore_auth:
-    #         - write:pets
-    #         - read:pets
+    put:
+      tags:
+        - employees
+      summary: Update employee by id
+      operationId: updateEmployeeById
+      parameters:
+        - name: id
+          in: path
+          description: ID of employee to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Employee to add to the directory
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Employee"
+        required: true
+      responses:
+        405:
+          description: Invalid input
+          content: {}
+      security:
+        - employees_auth:
+            - write:employee
+            - read:employee
     delete:
       tags:
-        - employee
+        - employees
       summary: Deletes an employee
       operationId: deleteEmployee
       parameters:
@@ -152,10 +148,10 @@ paths:
         - employeestore_auth:
             - write:employees
             - read:employees
-  /role:
+  /api/roles/:
     get:
       tags:
-        - role
+        - roles
       summary: Company role directory
       description: Returns a list of roles in the company
       operationId: getRoles
@@ -170,10 +166,31 @@ paths:
                   $ref: "#/components/schemas/Role"
       security:
         - api_key: []
-  /role/{id}:
+    post:
+      tags:
+        - roles
+      summary: Add a new role to the company
+      operationId: addrole
+      requestBody:
+        description: role to add to the copmany
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Role"
+        required: true
+      responses:
+        405:
+          description: Invalid input
+          content: {}
+      security:
+        - roles_auth:
+            - write:role
+            - read:role
+      x-codegen-request-body-name: body
+  /api/roles/{id}/:
     get:
       tags:
-        - role
+        - roles
       summary: Retrieves employees with role ID
       operationId: getEmployeesByRole
       parameters:
@@ -197,9 +214,37 @@ paths:
         404:
           description: Role not found
           content: {}
+    put:
+      tags:
+        - roles
+      summary: Update role by id
+      operationId: updateRoleById
+      parameters:
+        - name: id
+          in: path
+          description: ID of role to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: role to add to the directory
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Role"
+        required: true
+      responses:
+        405:
+          description: Invalid input
+          content: {}
+      security:
+        - roles_auth:
+            - write:role
+            - read:role
     delete:
       tags:
-        - role
+        - roles
       summary: Delete role by ID
       description: Role cannot be deleted if held by current employees
       operationId: deleteRole
@@ -218,10 +263,10 @@ paths:
         404:
           description: Role not found
           content: {}
-  /department:
+  /api/departments/:
     get:
       tags:
-        - department
+        - departments
       summary: Company department directory
       description: Returns a list of departments in the company
       operationId: getDepartments
@@ -236,11 +281,108 @@ paths:
                   $ref: "#/components/schemas/Department"
       security:
         - api_key: []
-  /department/{id}:
+    post:
+      tags:
+        - departments
+      summary: Add a new department to the company
+      operationId: adddepartment
+      requestBody:
+        description: department to add to the copmany
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Department"
+        required: true
+      responses:
+        405:
+          description: Invalid input
+          content: {}
+      security:
+        - departments_auth:
+            - write:department
+            - read:department
+      x-codegen-request-body-name: body
+  /api/departments/{id}/:
     get:
       tags:
-        - department
-      summary: Retrieves employees with department ID
+        - departments
+      summary: Retrieves department by id
+      operationId: getDepartmentById
+      parameters:
+        - name: id
+          in: path
+          description: ID of department
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Department"
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Department not found
+          content: {}
+    put:
+      tags:
+        - departments
+      summary: Update department by id
+      operationId: updatedepartmentById
+      parameters:
+        - name: id
+          in: path
+          description: ID of department to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: department to add to the directory
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Department"
+        required: true
+      responses:
+        405:
+          description: Invalid input
+          content: {}
+      security:
+        - departments_auth:
+            - write:department
+            - read:department
+    delete:
+      tags:
+        - departments
+      summary: Delete department by ID
+      description: department cannot be deleted if held by current employees
+      operationId: deleteDepartment
+      parameters:
+        - name: id
+          in: path
+          description: ID of the department to be deleted
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: department not found
+          content: {}
+  /api/departments/{id}/employees/:
+    get:
+      tags:
+        - departments
+      summary: Retrieves employees within departmentid
       operationId: getEmployeesByDepartment
       parameters:
         - name: ID
@@ -263,26 +405,32 @@ paths:
         404:
           description: Department not found
           content: {}
-    delete:
+  /api/departments/{id}/roles/:
+    get:
       tags:
-        - department
-      summary: Delete department by ID
-      description: department cannot be deleted if held by current employees
-      operationId: deleteDepartment
+        - departments
+      summary: Retrieves roles within department ID
+      operationId: getRolesByDepartment
       parameters:
-        - name: ID
+        - name: id
           in: path
-          description: ID of the department to be deleted
+          description: ID of department
           required: true
           schema:
             type: integer
             format: int64
       responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Department"
         400:
           description: Invalid ID supplied
           content: {}
         404:
-          description: department not found
+          description: Department not found
           content: {}
 components:
   schemas:

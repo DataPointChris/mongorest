@@ -22,4 +22,4 @@ POST    /api/departments/                - create new department
 PUT     /api/departments{id}             - update department by id
 DELETE  /api/departments{id}             - delete department by id
 GET     /api/departments/{id}/roles       - get all roles in department
-GET     /api/departments/{id}/employees   - get list of all employees in department
+GET     /api/departments/{id}/employees   - get  all employees in department
