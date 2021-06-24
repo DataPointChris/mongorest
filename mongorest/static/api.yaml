@@ -187,16 +187,16 @@ paths:
             - write:role
             - read:role
       x-codegen-request-body-name: body
-  /api/roles/{id}/:
+  /api/roles/{name}/:
     get:
       tags:
         - roles
-      summary: Retrieves employees with role ID
+      summary: Retrieves employees with role name
       operationId: getEmployeesByRole
       parameters:
-        - name: ID
+        - name: name
           in: path
-          description: ID of role
+          description: name of role
           required: true
           schema:
             type: integer
@@ -217,12 +217,12 @@ paths:
     put:
       tags:
         - roles
-      summary: Update role by id
-      operationId: updateRoleById
+      summary: Update role by name
+      operationId: updateRoleByName
       parameters:
-        - name: id
+        - name: name
           in: path
-          description: ID of role to update
+          description: name of role to update
           required: true
           schema:
             type: integer
@@ -245,20 +245,20 @@ paths:
     delete:
       tags:
         - roles
-      summary: Delete role by ID
+      summary: Delete role by name
       description: Role cannot be deleted if held by current employees
       operationId: deleteRole
       parameters:
-        - name: ID
+        - name: name
           in: path
-          description: ID of the role to be deleted
+          description: name of the role to be deleted
           required: true
           schema:
             type: integer
             format: int64
       responses:
         400:
-          description: Invalid ID supplied
+          description: Invalid name supplied
           content: {}
         404:
           description: Role not found
@@ -302,16 +302,16 @@ paths:
             - write:department
             - read:department
       x-codegen-request-body-name: body
-  /api/departments/{id}/:
+  /api/departments/{name}/:
     get:
       tags:
         - departments
-      summary: Retrieves department by id
-      operationId: getDepartmentById
+      summary: Retrieves department by name
+      operationId: getDepartmentByname
       parameters:
-        - name: id
+        - name: name
           in: path
-          description: ID of department
+          description: name of department
           required: true
           schema:
             type: integer
@@ -324,7 +324,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Department"
         400:
-          description: Invalid ID supplied
+          description: Invalid name supplied
           content: {}
         404:
           description: Department not found
@@ -332,12 +332,12 @@ paths:
     put:
       tags:
         - departments
-      summary: Update department by id
-      operationId: updatedepartmentById
+      summary: Update department by name
+      operationId: updatedepartmentByname
       parameters:
-        - name: id
+        - name: name
           in: path
-          description: ID of department to update
+          description: name of department to update
           required: true
           schema:
             type: integer
@@ -360,34 +360,34 @@ paths:
     delete:
       tags:
         - departments
-      summary: Delete department by ID
+      summary: Delete department by name
       description: department cannot be deleted if held by current employees
       operationId: deleteDepartment
       parameters:
-        - name: id
+        - name: name
           in: path
-          description: ID of the department to be deleted
+          description: name of the department to be deleted
           required: true
           schema:
             type: integer
             format: int64
       responses:
         400:
-          description: Invalid ID supplied
+          description: Invalid name supplied
           content: {}
         404:
           description: department not found
           content: {}
-  /api/departments/{id}/employees/:
+  /api/departments/{name}/employees/:
     get:
       tags:
         - departments
-      summary: Retrieves employees within departmentid
+      summary: Retrieves employees within departmentname
       operationId: getEmployeesByDepartment
       parameters:
-        - name: ID
+        - name: name
           in: path
-          description: ID of department
+          description: name of department
           required: true
           schema:
             type: integer
@@ -400,21 +400,21 @@ paths:
               schema:
                 $ref: "#/components/schemas/Department"
         400:
-          description: Invalid ID supplied
+          description: Invalid name supplied
           content: {}
         404:
           description: Department not found
           content: {}
-  /api/departments/{id}/roles/:
+  /api/departments/{name}/roles/:
     get:
       tags:
         - departments
-      summary: Retrieves roles within department ID
+      summary: Retrieves roles within department name
       operationId: getRolesByDepartment
       parameters:
-        - name: id
+        - name: name
           in: path
-          description: ID of department
+          description: name of department
           required: true
           schema:
             type: integer
@@ -427,7 +427,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Department"
         400:
-          description: Invalid ID supplied
+          description: Invalid name supplied
           content: {}
         404:
           description: Department not found
