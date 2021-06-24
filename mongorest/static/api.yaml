@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: 🐼 BamBORING API 🐼
-  description: ''
+  description: ""
   contact:
     name: Designed by Chris
     url: https://www.github.com/datapointchris/
@@ -17,10 +17,6 @@ servers:
 tags:
   - name: employees
     description: Employee directory
-  - name: role
-    description: Role directory
-  - name: department
-    description: Department directory
 paths:
   /api/employees/:
     get:
@@ -58,9 +54,7 @@ paths:
           description: Invalid input
           content: {}
       security:
-        - employees_auth:
-            - write:employee
-            - read:employee
+        - api_key: []
       x-codegen-request-body-name: body
   /api/employees/{id}/:
     get:
@@ -70,7 +64,7 @@ paths:
       description: Returns a single employee
       operationId: getEmployeeById
       parameters:
-        - name: ID
+        - name: id
           in: path
           description: ID of employee to return
           required: true
@@ -117,9 +111,7 @@ paths:
           description: Invalid input
           content: {}
       security:
-        - employees_auth:
-            - write:employee
-            - read:employee
+        - api_key: []
     delete:
       tags:
         - employees
@@ -130,7 +122,7 @@ paths:
           in: header
           schema:
             type: string
-        - name: ID
+        - name: id
           in: path
           description: employee ID to delete
           required: true
@@ -145,9 +137,7 @@ paths:
           description: Employee not found
           content: {}
       security:
-        - employeestore_auth:
-            - write:employees
-            - read:employees
+        - api_key: []
   /api/roles/:
     get:
       tags:
@@ -166,13 +156,22 @@ paths:
                   $ref: "#/components/schemas/Role"
       security:
         - api_key: []
-    post:
+  /api/roles/{name}/:
+    put:
       tags:
         - roles
-      summary: Add a new role to the company
-      operationId: addrole
+      summary: Update role by name
+      operationId: updateRoleByName
+      parameters:
+        - name: name
+          in: path
+          description: name of role to update
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
-        description: role to add to the copmany
+        description: role to add to the directory
         content:
           application/json:
             schema:
@@ -183,11 +182,8 @@ paths:
           description: Invalid input
           content: {}
       security:
-        - roles_auth:
-            - write:role
-            - read:role
-      x-codegen-request-body-name: body
-  /api/roles/{name}/:
+        - api_key: []
+  /api/roles/{name}/employees/:
     get:
       tags:
         - roles
@@ -214,51 +210,29 @@ paths:
         404:
           description: Role not found
           content: {}
-    put:
+  /api/roles/{name}/departments/:
+    get:
       tags:
         - roles
-      summary: Update role by name
-      operationId: updateRoleByName
+      summary: Retrieves department with role name
+      operationId: getDepartmentByRole
       parameters:
         - name: name
           in: path
-          description: name of role to update
-          required: true
-          schema:
-            type: integer
-            format: int64
-      requestBody:
-        description: role to add to the directory
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Role"
-        required: true
-      responses:
-        405:
-          description: Invalid input
-          content: {}
-      security:
-        - roles_auth:
-            - write:role
-            - read:role
-    delete:
-      tags:
-        - roles
-      summary: Delete role by name
-      description: Role cannot be deleted if held by current employees
-      operationId: deleteRole
-      parameters:
-        - name: name
-          in: path
-          description: name of the role to be deleted
+          description: name of role
           required: true
           schema:
             type: integer
             format: int64
       responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Role"
         400:
-          description: Invalid name supplied
+          description: Invalid ID supplied
           content: {}
         404:
           description: Role not found
@@ -281,54 +255,8 @@ paths:
                   $ref: "#/components/schemas/Department"
       security:
         - api_key: []
-    post:
-      tags:
-        - departments
-      summary: Add a new department to the company
-      operationId: adddepartment
-      requestBody:
-        description: department to add to the copmany
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Department"
-        required: true
-      responses:
-        405:
-          description: Invalid input
-          content: {}
-      security:
-        - departments_auth:
-            - write:department
-            - read:department
-      x-codegen-request-body-name: body
+
   /api/departments/{name}/:
-    get:
-      tags:
-        - departments
-      summary: Retrieves department by name
-      operationId: getDepartmentByname
-      parameters:
-        - name: name
-          in: path
-          description: name of department
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        200:
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Department"
-        400:
-          description: Invalid name supplied
-          content: {}
-        404:
-          description: Department not found
-          content: {}
     put:
       tags:
         - departments
@@ -354,30 +282,7 @@ paths:
           description: Invalid input
           content: {}
       security:
-        - departments_auth:
-            - write:department
-            - read:department
-    delete:
-      tags:
-        - departments
-      summary: Delete department by name
-      description: department cannot be deleted if held by current employees
-      operationId: deleteDepartment
-      parameters:
-        - name: name
-          in: path
-          description: name of the department to be deleted
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        400:
-          description: Invalid name supplied
-          content: {}
-        404:
-          description: department not found
-          content: {}
+        - api_key: []
   /api/departments/{name}/employees/:
     get:
       tags:
@@ -506,14 +411,6 @@ components:
         message:
           type: string
   securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: http://petstore.swagger.io/oauth/dialog
-          scopes:
-            write:pets: modify pets in your account
-            read:pets: read your pets
     api_key:
       type: apiKey
       name: api_key

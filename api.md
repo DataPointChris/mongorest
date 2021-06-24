@@ -1,8 +1,8 @@
 employee
 ----------
 GET     /api/employees/           - get list of employees for analytics
-GET     /api/employees/{id}      - get employee by id
 POST    /api/employees/          - create new employee by id
+GET     /api/employees/{id}      - get employee by id
 PUT     /api/employees/{id}      - update employee with id
 DELETE  /api/employees/{id}      - delete employee by id
 
@@ -17,5 +17,5 @@ department
 ----------
 GET     /api/departments/                 - get list of departments
 PUT     /api/departments/{name}             - edit department by name
-GET     /api/departments/{name}/roles       - get all roles in department
 GET     /api/departments/{name}/employees   - get  all employees in department
+GET     /api/departments/{name}/roles       - get all roles in department
