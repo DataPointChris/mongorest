@@ -24,17 +24,18 @@ class DBManager:
         self.coll.update_one(query, update_data)
 
     def delete_employee_by_id(self, id):
-        self.coll.delete_one({'_id': id})
+        self.coll.delete_one({'id': id})
 
     # ----- ROLES ----- #
 
     def get_role_list(self):  # DONE
         return self.coll.distinct('role')
 
-    def put_edit_role_by_name(self, role, **updated_kwargs):
+    def put_edit_role_by_name(self, role, updated):
         query = {'role': role}
-        update_data = {'$set': {**updated_kwargs}}
-        self.coll.update_one(query, update_data)
+        updates = updated.get('updates')
+        update_data = {'$set': {**updates}}
+        self.coll.update_many(query, update_data)
 
     def get_employees_by_role(self, role):  # DONE
         return self.coll.find({'role': role})
@@ -49,10 +50,11 @@ class DBManager:
     def get_department_list(self):  # DONE
         return self.coll.distinct('department')
 
-    def put_edit_department_by_name(self, name, **updated_kwargs):
+    def put_edit_department_by_name(self, name, updated):
         query = {'name': name}
-        update_data = {'$set': {**updated_kwargs}}
-        self.coll.update_one(query, update_data)
+        updates = updated.get('updates')
+        update_data = {'$set': {**updates}}
+        self.coll.update_many(query, update_data)
 
     def get_employees_in_department(self, dept):
         return self.coll.find({'department': dept})

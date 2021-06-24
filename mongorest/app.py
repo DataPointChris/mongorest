@@ -1,10 +1,9 @@
-from locale import Error
 import os
 
 import dotenv
 import pymongo
-from flask import Flask, jsonify, redirect, render_template, request
 from bson.json_util import dumps
+from flask import Flask, make_response, render_template, request
 
 from . import mongodb
 
@@ -37,7 +36,7 @@ def index():
         if delete:
             db.delete_all()
     emps = db.get_employee_directory()
-    employees = [(f'{d["firstname"]} {d["lastname"]}') for d in emps]
+    employees = [(f'{d.get("firstname")} {d.get("lastname")}') for d in emps]
     return render_template('index.html', employees=employees)
 
 
@@ -55,7 +54,7 @@ def api():
 @app.route('/api/employees/', methods=['GET', 'POST'])
 def employees():
     if request.method == 'POST':
-        employee = request.get('employee')
+        employee = request.get_json()
         db.post_new_employee(employee)
         # TODO: Do I need a success message here?
         return render_template('index.html')
@@ -66,14 +65,16 @@ def employees():
 
 
 @app.route('/api/employees/<int:id>/', methods=['GET', 'PUT', 'DELETE'])
-def employee_by_id(id, **updated_kwargs):
-    # id = request.form.get('id')
-    # updated_kwargs = request.form.get('updated_kwargs')
+def employee_by_id(id):
+    '''id comes from URL, no need to put it in the payload'''
+    updated = request.get_json()
     if request.method == 'PUT':
-        db.put_update_employee_by_id(id, **updated_kwargs)
+        db.put_update_employee_by_id(id, **updated)
+        return make_response('Successful Update', 200)
 
     elif request.method == 'DELETE':
         db.delete_employee_by_id(id)
+        return make_response('Successful deletion', 200)
 
     employee = db.get_employee_by_id(id)
     # TODO: Should this be a `make_response()`
@@ -90,24 +91,23 @@ def roles():
     return dumps({'roles': roles})
 
 
-@app.route('/roles/<string:name>/', methods=['PUT'])
+@app.route('/api/roles/<string:name>/', methods=['PUT'])
 def edit_role(name):
-    # name = request.form.get('name')
-    db.put_edit_role_by_name(name)
+    updated = {'updates': request.get_json()}
+    db.put_edit_role_by_name(name, updated)
+    return make_response('Successful update', 200)
 
 
 @app.route('/api/roles/<string:name>/employees/', methods=['GET'])
 def employees_by_role(name):
     '''Find employees with this role'''
-    # name = request.form.get('name')
     roles = db.get_employees_by_role(name)
     return dumps({name: roles})
 
 
 @app.route('/api/roles/<string:name>/departments/', methods=['GET'])
-def departments_by_role():
+def departments_by_role(name):
     '''Find departments with this role'''
-    name = request.form.get('name')
     roles = db.get_departments_with_role(name)
     return dumps({name: roles})
 
@@ -122,23 +122,21 @@ def departments():
 
 
 @app.route('/api/departments/<string:name>/', methods=['PUT'])
-def edit_department():
-    name = request.form.get('name')
-    updated_kwargs = request.form.get('updated_kwargs')
-    db.put_edit_department_by_name(name, **updated_kwargs)
+def edit_department(name):
+    updated = {'updates': request.get_json()}
+    db.put_edit_department_by_name(name, **updated)
+    return make_response('Successful update', 200)
 
 
 @app.route('/api/departments/<string:name>/employees/', methods=['GET'])
-def employees_by_department():
+def employees_by_department(name):
     '''Find employees with this department'''
-    name = request.form.get('name')
     departments = db.get_employees_in_department(name)
     return dumps({name: departments})
 
 
 @app.route('/api/departments/<string:name>/roles/', methods=['GET'])
-def roles_by_department():
+def roles_by_department(name):
     '''Find roles in this department'''
-    name = request.form.get('name')
     departments = db.get_roles_by_department(name)
     return dumps({name: departments})
