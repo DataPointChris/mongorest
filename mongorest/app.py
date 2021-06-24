@@ -43,38 +43,38 @@ def index():
 def api():
     return render_template('api.html')
 
-@app.route('/employee/')
+@app.route('/api/employees/')
 def get_employees():
     employees = db.get_employee_list()
     return dumps({'employees': employees})
 
 
-@app.route('/employee/<int:id>/')
+@app.route('/api/employees/<int:id>/')
 def employee_by_id(id):
     employee = db.get_employee_id(id)
     return dumps({'employee': employee})
 
 
-@app.route('/role/')
+@app.route('/api/roles/')
 def get_roles():
     roles = db.get_role_list()
     return dumps({'roles': roles})
 
 
-@app.route('/role/<string:name>/')
+@app.route('/roles/<string:name>/')
 def role_by_name(name):
     '''Find employees with this role'''
     roles = db.get_role_employees(name)
     return dumps({name: roles})
 
 
-@app.route('/department/')
+@app.route('/api/departments/')
 def get_departments():
     departments = db.get_department_list()
     return dumps({'departments': departments})
 
 
-@app.route('/department/<string:name>/')
+@app.route('/api/departments/<string:name>/')
 def department_by_name(name):
     '''Find employees with this department'''
     departments = db.get_department_employees(name)
