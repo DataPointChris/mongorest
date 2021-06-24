@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-        <div id="swagger-ui"></div>
+        <div id="swagger-ui" class='swaggercontainer' style='width: 95%; margin: auto;'></div>
 
         <script src="{{ url_for('static', filename='js/swagger-ui-bundle.js')}}" charset="UTF-8"> </script>
         <script src="{{ url_for('static', filename='js/swagger-ui-standalone-preset.js')}}" charset="UTF-8"> </script>
@@ -26,4 +26,5 @@
                 window.ui = ui;
             };
         </script>
+
 {% endblock content %}
