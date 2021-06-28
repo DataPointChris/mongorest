@@ -21,7 +21,7 @@ def create_fake_employees(num_employees):
     statusii = ['current', 'sabbatical', 'terminated', 'furlough']
     fake_list = []
 
-    for i in range(num_employees):
+    for _ in range(num_employees):
         dept_no = random.randint(1, len(departments))
         department = departments[dept_no]
         salary = random.randint(100_000, 125_000)
@@ -37,7 +37,6 @@ def create_fake_employees(num_employees):
         status = random.choice(statusii)
 
         fake_employee = {
-            "id": i,
             "firstname": fake.first_name(),
             "lastname": fake.last_name(),
             "personal_info": {

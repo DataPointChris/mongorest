@@ -31,12 +31,22 @@ def index():
             numemps = 1
         delete = request.form.get('deleteall')
         if insert:
-            db.delete_all()
+            # db.delete_all()
             db.insert_test_values(numemps)
         if delete:
             db.delete_all()
-    emps = db.get_employee_directory()
-    employees = [(f'{d.get("firstname")} {d.get("lastname")}') for d in emps]
+    employee_list = db.get_employee_directory()
+    employees = []
+    for employee in employee_list:
+        first = employee.get('firstname')
+        last = employee.get('lastname')
+        id = employee.get('id')
+        empid = employee.get('empid')
+        string = f'ID: {id}, EMPID: {empid}, Name: {first} {last}'
+        employees.append(string)
+    # depts = db.get_department_aggregates()
+
+    # roles = db.get_role_aggregates()
     return render_template('index.html', employees=employees)
 
 

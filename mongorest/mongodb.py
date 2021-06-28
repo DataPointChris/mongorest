@@ -66,9 +66,19 @@ class DBManager:
 
     # ----- MISC ----- #
 
+    def retrieve_next_empid(self):
+        try:
+            return list(self.coll.find({}, {'empid'}).sort('empid', -1).limit(1))[0]['empid'] + 1
+        except IndexError:
+            return 1
     def insert_test_values(self, qty):  # DONE
         '''Only for testing of database'''
-        self.coll.insert_many(create_fake_employees(qty))
+        fakes = create_fake_employees(qty)
+        next_emp_id = self.retrieve_next_empid()
+        for employee in fakes:
+            employee.update({'empid': next_emp_id})
+            next_emp_id += 1
+        self.coll.insert_many(fakes)
 
     def generic_update(self, field, id, **updated_kwargs):
         query = {field: id}
