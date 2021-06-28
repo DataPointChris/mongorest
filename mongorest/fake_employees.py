@@ -18,7 +18,7 @@ def create_fake_employees(num_employees):
         7: 'CTO',
         8: 'CEO',
     }
-    status = ['current', 'sabbatical', 'terminated', 'furlough']
+    statusii = ['current', 'sabbatical', 'terminated', 'furlough']
     fake_list = []
 
     for i in range(num_employees):
@@ -34,7 +34,7 @@ def create_fake_employees(num_employees):
         previous_roles = list(
             set(random.choice(list(roles.values())) for r in range(random.randint(0, 3)))
         )
-        status = random.choice(status)
+        status = random.choice(statusii)
 
         fake_employee = {
             "id": i,

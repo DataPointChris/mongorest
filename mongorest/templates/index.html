@@ -2,7 +2,25 @@
 
 {% block content %}
 <div class="indexcontent">
-    <div class='fakeform'>
+    <div id='leftbox' class='column-box'>
+        <h3>Left Box</h3>
+        <h3>Current Employees:</h3>
+        <hr width="60%"><br>
+
+        {% for employee in employees %}
+        - {{ employee }}<br>
+        {% endfor %}
+    </div>
+    <div id='rightbox' class='column-box'>
+        <h3>Right Box</h3>
+        <h3>Current Employees:</h3>
+        <hr width="60%"><br>
+
+        {% for employee in employees %}
+        - {{ employee }}<br>
+        {% endfor %}
+    </div>
+    <div id='centerbox' class='column-box'>
         <form method="POST">
             <h3>Add Fake Employees to DB: </h3>
             <input class='bigbutton' type="number" id='numemps' name='numemps' value='50'><br>
@@ -13,8 +31,7 @@
             <input type="hidden" name="deleteall" value="True">
             <input class='bigbutton' type="submit" id='delete' name="delete" value="Delete All Employees" />
         </form>
-        <!-- </div> -->
-        <!-- <div class='employeelist'> -->
+
         <h3>Current Employees:</h3>
         <hr width="60%"><br>
 
