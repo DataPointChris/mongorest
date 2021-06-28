@@ -3,21 +3,27 @@
 {% block content %}
 <div class="indexcontent">
     <div id='leftbox' class='column-box'>
-        <h3>Left Box</h3>
-        <h3>Current Employees:</h3>
-        <hr width="60%"><br>
-
-        {% for employee in employees %}
-        - {{ employee }}<br>
+        <h4>-------------------</h4>
+        <h2>Departments</h2>
+        {% for dep in departments %}
+        {% for dep, num in dep.items() %}
+        <h4>{{ dep }}</h4>
+        <hr width="30%">
+        Employees: {{ num }}
+        <br><br><br><br>
+        {% endfor %}
         {% endfor %}
     </div>
     <div id='rightbox' class='column-box'>
-        <h3>Right Box</h3>
-        <h3>Current Employees:</h3>
-        <hr width="60%"><br>
-
-        {% for employee in employees %}
-        - {{ employee }}<br>
+        <h4>-------------------</h4>
+        <h2>Roles</h2>
+        {% for role in roles %}
+        {% for role, num in role.items() %}
+        <h4>{{ role }}</h4>
+        <hr width="30%">
+        Employees: {{ num }}
+        <br><br><br><br>
+        {% endfor %}
         {% endfor %}
     </div>
     <div id='centerbox' class='column-box'>

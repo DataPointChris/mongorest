@@ -45,6 +45,9 @@ class DBManager:
         depts = [d.get('department') for d in deptdict]
         return depts
 
+    def get_aggregated_roles(self):
+        return self.coll.aggregate([{'$group': {'_id': '$role', 'emps': {'$sum': 1}}}])
+
     # ----- DEPARTMENTS ----- #
 
     def get_department_list(self):  # DONE
@@ -64,13 +67,20 @@ class DBManager:
         roles = [d.get('role') for d in roledict]
         return roles
 
+    def get_aggregated_departments(self):
+        return self.coll.aggregate([{'$group': {'_id': '$department', 'emps': {'$sum': 1}}}])
+
     # ----- MISC ----- #
 
     def retrieve_next_empid(self):
         try:
-            return list(self.coll.find({}, {'empid'}).sort('empid', -1).limit(1))[0]['empid'] + 1
+            return (
+                list(self.coll.find({}, {'empid'}).sort('empid', -1).limit(1))[0]['empid']
+                + 1
+            )
         except IndexError:
             return 1
+
     def insert_test_values(self, qty):  # DONE
         '''Only for testing of database'''
         fakes = create_fake_employees(qty)

@@ -40,14 +40,17 @@ def index():
     for employee in employee_list:
         first = employee.get('firstname')
         last = employee.get('lastname')
-        id = employee.get('id')
         empid = employee.get('empid')
-        string = f'ID: {id}, EMPID: {empid}, Name: {first} {last}'
+        string = f'EMPID: {empid}, Name: {first} {last}'
         employees.append(string)
-    # depts = db.get_department_aggregates()
+    depts = db.get_aggregated_departments()
+    departments = [{d.get('_id').capitalize(): d.get('emps')} for d in depts]
 
-    # roles = db.get_role_aggregates()
-    return render_template('index.html', employees=employees)
+    role_list = db.get_aggregated_roles()
+    roles = [{d.get('_id').capitalize(): d.get('emps')} for d in role_list]
+    return render_template(
+        'index.html', employees=employees, departments=departments, roles=roles
+    )
 
 
 @app.route('/api/')

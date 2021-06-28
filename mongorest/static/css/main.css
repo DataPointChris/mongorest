@@ -100,11 +100,11 @@ a:active {
 
 div.column-box {
 
+  text-align: center;
 
   padding              : 20px;
   padding-bottom       : 80px;
   font-size            : 1em;
-  text-align           : center;
   background-color     : #949494;
   -webkit-border-radius: 20px;
   -moz-border-radius   : 20px;
@@ -125,6 +125,7 @@ div.column-box {
   margin-top                : 100px;
   margin-left               : 0;
   padding-left              : 10px;
+  padding-top               : 50px;
   color                     : whitesmoke;
   background-color          : #265486;
   border-top-left-radius    : 0;
@@ -138,6 +139,7 @@ div.column-box {
   width : 55%;
   color : black;
 
+
   background-color: #949494;
   border-radius   : 100px;
 
@@ -145,10 +147,12 @@ div.column-box {
 }
 
 #rightbox {
-  width                     : 15%;
-  float                     : right;
-  margin-top                : 100px;
-  margin-right              : 0;
+  width       : 15%;
+  float       : right;
+  margin-top  : 100px;
+  margin-right: 0;
+  padding-top : 50px;
+
   padding-right             : 5px;
   color                     : whitesmoke;
   background-color          : #265486;
@@ -213,7 +217,6 @@ div.employeelist {
 h2 {
   font-size     : 3em;
   margin-top    : 5px;
-  text-align    : center;
   letter-spacing: 1px;
   font-variant  : small-caps;
 }
@@ -227,6 +230,8 @@ h3 {
 
 h4 {
   font-size: 1.6em;
+  padding  : 0;
+  margin   : 0;
 }
 
 .menu {
