@@ -9,7 +9,15 @@
 
 ## Resources
 
-[THANK YOU](https://www.linode.com/docs/guides/flask-and-gunicorn-on-ubuntu/)
+[Linode Article on Flask and Gunicorn](https://www.linode.com/docs/guides/flask-and-gunicorn-on-ubuntu/)
+
+[Pragmatic RESTful API](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
+
+[Google Resource Oriented Design](https://cloud.google.com/apis/design/resources)
+
+[Microsoft Web API Best Practices](https://docs.microsoft.com/en-us/azure/architecture/best-practices/api-design)
+
+
 
 ## License
 
