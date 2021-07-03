@@ -1,13 +1,14 @@
 ![Flask Server](flaskserve.png)
 <h1 align="center">
-  mongorest
-  <br>
+  BamBORING HR Test Site for MongoDB backend REST API
 </h1>
 
 <h4 align="center">Flask App Serving MongoDB RESTful API Like a Champ<br />
 </h4>
 
 ## Resources
+
+[stripe Awesome API Docs Example](https://stripe.com/docs/api)
 
 [Linode Article on Flask and Gunicorn](https://www.linode.com/docs/guides/flask-and-gunicorn-on-ubuntu/)
 
