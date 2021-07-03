@@ -1,9 +1,8 @@
 import os
-import json
 import dotenv
 import pymongo
 from bson.json_util import dumps as bson_dumps
-from flask import Flask, make_response, render_template, request, jsonify
+from flask import Flask, make_response, render_template, request
 
 from . import mongodb
 

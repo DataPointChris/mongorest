@@ -80,10 +80,10 @@ class DBManager:
 
     def retrieve_next_empid(self):
         try:
-            return (
-                list(self.coll.find({}, {'empid'}).sort('empid', -1).limit(1))[0]['empid']
-                + 1
-            )
+            last_emp_doc = list(self.coll.find({}, {'empid'}).sort('empid', -1).limit(1))
+            last_id = last_emp_doc[0]['empid']
+            new_id = last_id + 1
+            return new_id
         except IndexError:
             return 1
 
