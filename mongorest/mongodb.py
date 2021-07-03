@@ -12,19 +12,23 @@ class DBManager:
     def get_employee_directory(self):  # DONE
         return self.coll.find({})
 
-    def get_employee_by_id(self, id):  # DONE
-        return self.coll.find({'id': id})
+    def get_employee_by_empid(self, empid):  # DONE
+        return self.coll.find({'empid': empid})
 
     def post_new_employee(self, employee):
-        self.coll.insert_one(employee)
+        # Add next empid from database to new employee
+        employee.update({'empid': self.retrieve_next_empid()})
+        result = self.coll.insert_one(employee)
+        _id = result.inserted_id
+        return self.coll.find({'_id': _id})
 
-    def put_update_employee_by_id(self, id, **updated_kwargs):
-        query = {'id': id}
+    def put_update_employee_by_empid(self, empid, **updated_kwargs):
+        query = {'empid': empid}
         update_data = {'$set': {**updated_kwargs}}
         self.coll.update_one(query, update_data)
 
-    def delete_employee_by_id(self, id):
-        self.coll.delete_one({'id': id})
+    def delete_employee_by_empid(self, empid):
+        self.coll.delete_one({'empid': empid})
 
     # ----- ROLES ----- #
 
@@ -68,7 +72,9 @@ class DBManager:
         return roles
 
     def get_aggregated_departments(self):
-        return self.coll.aggregate([{'$group': {'_id': '$department', 'emps': {'$sum': 1}}}])
+        return self.coll.aggregate(
+            [{'$group': {'_id': '$department', 'emps': {'$sum': 1}}}]
+        )
 
     # ----- MISC ----- #
 
@@ -95,6 +101,6 @@ class DBManager:
         update_data = {'$set': {**updated_kwargs}}
         self.coll.update_one(query, update_data)
 
-    def delete_all(self):
+    def _delete_all(self):
         '''ONLY for testing of database!!'''
         self.coll.delete_many({})

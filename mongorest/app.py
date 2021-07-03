@@ -1,9 +1,9 @@
 import os
-
+import json
 import dotenv
 import pymongo
-from bson.json_util import dumps
-from flask import Flask, make_response, render_template, request
+from bson.json_util import dumps as bson_dumps
+from flask import Flask, make_response, render_template, request, jsonify
 
 from . import mongodb
 
@@ -34,7 +34,7 @@ def index():
             # db.delete_all()
             db.insert_test_values(numemps)
         if delete:
-            db.delete_all()
+            db._delete_all()
     employee_list = db.get_employee_directory()
     employees = []
     for employee in employee_list:
@@ -68,30 +68,37 @@ def api():
 def employees():
     if request.method == 'POST':
         employee = request.get_json()
-        db.post_new_employee(employee)
-        # TODO: Do I need a success message here?
-        return render_template('index.html')
+        response = db.post_new_employee(employee)
+        status = 201
+        headers = {'content-type': 'application/json'}
+        return make_response(bson_dumps(response), status, headers)
 
-    employees = db.get_employee_directory()
-    # TODO: Should this be a make_response
-    return dumps({'employees': employees})
+    response = db.get_employee_directory()
+    status = 200
+    headers = {'content-type': 'application/json'}
+    return make_response(bson_dumps(response), status, headers)
 
 
-@app.route('/api/employees/<int:id>/', methods=['GET', 'PUT', 'DELETE'])
-def employee_by_id(id):
-    '''id comes from URL, no need to put it in the payload'''
+@app.route('/api/employees/<int:empid>/', methods=['GET', 'PUT', 'DELETE'])
+def employee_by_empid(empid):
+    '''empid comes from URL, no need to put it in the payload'''
     updated = request.get_json()
     if request.method == 'PUT':
-        db.put_update_employee_by_id(id, **updated)
-        return make_response('Successful Update', 200)
+        db.put_update_employee_by_empid(empid, **updated)
+        response = db.get_employee_by_empid(empid)
+        status = 200
+        headers = {'content-type': 'application/json'}
+        return make_response(bson_dumps(response), status, headers)
 
     elif request.method == 'DELETE':
-        db.delete_employee_by_id(id)
-        return make_response('Successful deletion', 200)
+        db.delete_employee_by_empid(empid)
+        status = 204  # no content
+        return make_response('', status)
 
-    employee = db.get_employee_by_id(id)
-    # TODO: Should this be a `make_response()`
-    return dumps({'employee': employee})
+    response = db.get_employee_by_empid(empid)
+    status = 200
+    headers = {'content-type': 'application/json'}
+    return make_response(bson_dumps(response), status, headers)
 
 
 # ----- ROLES ----- #
@@ -99,9 +106,10 @@ def employee_by_id(id):
 
 @app.route('/api/roles/', methods=['GET'])
 def roles():
-    roles = db.get_role_list()
-    # TODO: make_response
-    return dumps({'roles': roles})
+    response = db.get_role_list()
+    status = 200
+    headers = {'content-type': 'application/json'}
+    return make_response(bson_dumps(response), status, headers)
 
 
 @app.route('/api/roles/<string:name>/', methods=['PUT'])
@@ -114,15 +122,19 @@ def edit_role(name):
 @app.route('/api/roles/<string:name>/employees/', methods=['GET'])
 def employees_by_role(name):
     '''Find employees with this role'''
-    roles = db.get_employees_by_role(name)
-    return dumps({name: roles})
+    response = db.get_employees_by_role(name)
+    status = 200
+    headers = {'content-type': 'application/json'}
+    return make_response(bson_dumps(response), status, headers)
 
 
 @app.route('/api/roles/<string:name>/departments/', methods=['GET'])
 def departments_by_role(name):
     '''Find departments with this role'''
-    roles = db.get_departments_with_role(name)
-    return dumps({name: roles})
+    response = db.get_departments_with_role(name)
+    status = 200
+    headers = {'content-type': 'application/json'}
+    return make_response(bson_dumps(response), status, headers)
 
 
 # ----- DEPARTMENTS ----- #
@@ -130,8 +142,10 @@ def departments_by_role(name):
 
 @app.route('/api/departments/', methods=['GET'])
 def departments():
-    departments = db.get_department_list()
-    return dumps({'departments': departments})
+    response = db.get_department_list()
+    status = 200
+    headers = {'content-type': 'application/json'}
+    return make_response(bson_dumps(response), status, headers)
 
 
 @app.route('/api/departments/<string:name>/', methods=['PUT'])
@@ -144,12 +158,16 @@ def edit_department(name):
 @app.route('/api/departments/<string:name>/employees/', methods=['GET'])
 def employees_by_department(name):
     '''Find employees with this department'''
-    departments = db.get_employees_in_department(name)
-    return dumps({name: departments})
+    response = db.get_employees_in_department(name)
+    status = 200
+    headers = {'content-type': 'application/json'}
+    return make_response(bson_dumps(response), status, headers)
 
 
 @app.route('/api/departments/<string:name>/roles/', methods=['GET'])
 def roles_by_department(name):
     '''Find roles in this department'''
-    departments = db.get_roles_by_department(name)
-    return dumps({name: departments})
+    response = db.get_roles_by_department(name)
+    status = 200
+    headers = {'content-type': 'application/json'}
+    return make_response(bson_dumps(response), status, headers)
