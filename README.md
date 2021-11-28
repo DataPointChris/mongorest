@@ -18,6 +18,7 @@
 
 [Microsoft Web API Best Practices](https://docs.microsoft.com/en-us/azure/architecture/best-practices/api-design)
 
+[Real Python FastAPI](https://realpython.com/fastapi-python-web-apis/)
 
 
 ## License
